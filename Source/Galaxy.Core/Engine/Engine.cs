@@ -110,11 +110,15 @@ namespace Galaxy.Core.Engine
         Level = new FailScreen();
       }
 
-      if (m_canvas.Image != null)
+      m_canvas.Invoke(new Action(() =>
       {
-        m_canvas.Image.Dispose();
-      }
-      m_canvas.Image = frame;
+          if (m_canvas.Image != null)
+          {
+              m_canvas.Image.Dispose();
+          }
+          m_canvas.Image = frame;
+      }));
+      
     }
 
     #endregion

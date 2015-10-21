@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Galaxy.Core.Actors;
 using Galaxy.Core.Environment;
-
+using System.Diagnostics;
 
 namespace Galaxy.Environments.Actors
 {
@@ -9,7 +9,7 @@ namespace Galaxy.Environments.Actors
     {
     #region Constant
 
-    private const int Speed = 7;
+    private static int Speed = 5;
 
     #endregion
 
@@ -34,15 +34,10 @@ namespace Galaxy.Environments.Actors
 
     public override void Update()
     {
-
+        
       Position = new Point(Position.X, Position.Y + Speed);
 
-        //смещение кораблей
-   //   if (IsPressed(VirtualKeyStates.Left))
-   //       Position = new Point(Position.X - Speed, Position.Y );
-   //   if (IsPressed(VirtualKeyStates.Right))
-   //       Position = new Point(Position.X + Speed, Position.Y );
-   //   Position = new Point((int)(Position.X), (int)(Position.Y + 1));
+        
     }
     
     #endregion

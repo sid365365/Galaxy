@@ -73,13 +73,13 @@ namespace Galaxy.Core.Environment
 
     public abstract BaseLevel NextLevel();
 
-    public virtual void Update()
-    {
-      foreach (BaseActor baseActor in Actors)
-      {
-        baseActor.Update();
-      }
-    }
+    //public virtual void Update()
+    //{
+    //  foreach (BaseActor baseActor in Actors)
+    //  {
+    //    baseActor.Update();
+    //  }
+    //}
 
     protected bool IsPressed(VirtualKeyStates key)
     {
@@ -95,7 +95,7 @@ namespace Galaxy.Core.Environment
     {
       graphics.DrawImage(m_image, 0, 0);
     }
-
+      
     private void h_load()
     {
       m_image = (Bitmap)Image.FromFile(FileName);
@@ -121,23 +121,26 @@ namespace Galaxy.Core.Environment
   /// <param name="pEnemyBullet"></param>
 
     public void AddBullet(BaseActor pEnemyBullet)
-    {
+  {
+      
         Actors.Add(pEnemyBullet);
 
     }
-    //public virtual void Update()
-    //{
+    public virtual void Update()
+    {
 
-    //    BaseActor[] actors = new BaseActor[Actors.Count];
-    //    Actors.CopyTo(actors);
-    //    foreach (BaseActor baseActor in actors)
-    //    {
-    //        baseActor.Update();
-    //    }
-    //}
+        BaseActor[] actors = new BaseActor[Actors.Count];
+        Actors.CopyTo(actors);
+        foreach (BaseActor baseActor in actors)
+        {
+            baseActor.Update();
+        }
+    }
+
+    
 
 
-    protected BaseActor Player { get; set; }
+      protected BaseActor Player { get; set; }
 
     #endregion
   }

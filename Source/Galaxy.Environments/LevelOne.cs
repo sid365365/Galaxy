@@ -1,8 +1,13 @@
 ﻿#region using
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms.VisualStyles;
 using Galaxy.Core.Actors;
 using Galaxy.Core.Collision;
 using Galaxy.Core.Environment;
@@ -15,168 +20,178 @@ using System.Threading;
 namespace Galaxy.Environments
 
 {
-  /// <summary>
-  ///   The level class for Open Mario.  This will be the first level that the player interacts with.
-  /// </summary>
-  public class LevelOne : BaseLevel
-  {
-    private int m_frameCount;
-
-    #region Constructors
-
     /// <summary>
-    ///   Initializes a new instance of the <see cref="LevelOne" /> class.
+    ///   The level class for Open Mario.  This will be the first level that the player interacts with.
     /// </summary>
-    
-    public LevelOne()
+    public class LevelOne : BaseLevel
     {
-      // Backgrounds
-      FileName = @"Assets\LevelOne.png";
-     
-      // Enemies
-    //  EnemyBulletKri();
-  //    MyTimer();
-      for (int i = 0; i < 5; i++)
-      {
-        var ship = new Ship(this);
-        int positionY = ship.Height + 10;
-        int positionX = 150 + i * (ship.Width + 50);
+        private int m_frameCount;
 
-        ship.Position = new Point(positionX, positionY);       
+        #region Constructors
 
-        Actors.Add(ship);        
-      }
-      for (int i = 0; i < 4; i++)
-      {
-          var ship2 = new Ship_2(this);
-          int positionY = ship2.Height + 50;
-          int positionX = 170 + i * (ship2.Width + 100);
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LevelOne" /> class.
+        /// </summary>
+        public LevelOne()
+        {
+            // Backgrounds
+            FileName = @"Assets\LevelOne.png";
 
-          ship2.Position = new Point(positionX, positionY);
+            //// Enemies
+           
+            for (int i = 0; i < 5; i++)
+            {
+                var ship = new Ship(this);
+                int positionY = ship.Height + 10;
+                int positionX = 150 + i*(ship.Width + 50);
 
-          Actors.Add(ship2);
-      }
+                ship.Position = new Point(positionX, positionY);
 
-      
+                Actors.Add(ship);
+            }
+        
+            for (int i = 0; i < 4; i++)
+            {
+                var ship2 = new Ship_2(this);
+                int positionY = ship2.Height + 50;
+                int positionX = 170 + i*(ship2.Width + 100);
 
+                ship2.Position = new Point(positionX, positionY);
 
-      for (int i = 0; i < 3; i++)
-      {
-        var starOfDeathShip = new StarOfDeathShip(this);
-        int positionY = starOfDeathShip.Height + 90;
-        int positionX = 160 + i * (starOfDeathShip.Width + 120);
+                //
+            //    Actors.Add(ship2.krienemybul(ship2));
+                //
 
-        starOfDeathShip.Position = new Point(positionX, positionY);
+                Actors.Add(ship2);
+            }
 
-        Actors.Add(starOfDeathShip);
-      }
+           
+            for (int i = 0; i < 3; i++)
+            {
+                var starOfDeathShip = new StarOfDeathShip(this);
+                int positionY = starOfDeathShip.Height + 90;
+                int positionX = 160 + i*(starOfDeathShip.Width + 120);
 
+                starOfDeathShip.Position = new Point(positionX, positionY);
+
+                Actors.Add(starOfDeathShip);
+            }
+         
             // Player            
-      Player = new PlayerShip(this);
-      int playerPositionX = Size.Width / 2 - Player.Width / 2;
-      int playerPositionY = Size.Height - Player.Height - 50;
-      Player.Position = new Point(playerPositionX, playerPositionY);
-      Actors.Add(Player);
-    }
+            Player = new PlayerShip(this);
+            int playerPositionX = Size.Width/2 - Player.Width/2;
+            int playerPositionY = Size.Height - Player.Height - 50;
+            Player.Position = new Point(playerPositionX, playerPositionY);
+            Actors.Add(Player);
+            
+        }
 
-    #endregion
+        #endregion
 
-    #region Overrides
-      //создание 5и пуль
+        #region Overrides
+        
+        private void h_dispatchKey()
+        {
+            if (!IsPressed(VirtualKeyStates.Space)) return;
 
-    //private  void EnemyBulletKri()
-    //{
-                 
-    //        for (int i = 0; i < 4; i++)
-    //      {
-    //          var EnemyBullet = new EnemyBullet(this);
-    //          int positionY = EnemyBullet.Height + 50;
-    //          int positionX = 170 + i * (EnemyBullet.Width + 100);
-    //          EnemyBullet.Position = new Point(positionX, positionY);
-              
-    //          Actors.Add(EnemyBullet);
+            if (m_frameCount%10 != 0) return;
 
-    //      }
-                      
-                
-    // }
-    // void MyTimer()
-    //{
-    //    System.Timers.Timer myTimer = new System.Timers.Timer();
-    //    myTimer.Elapsed += new ElapsedEventHandler(Timer_Tick);
-    //    myTimer.Interval = 500;
-    //    myTimer.Start();
-    //}
+            Bullet bullet = new Bullet(this)
+            {
+                Position = Player.Position
+            };
 
-    //private  void Timer_Tick(object sender, ElapsedEventArgs e)
-    //{
-    //   EnemyBulletKri();
+           
+            bullet.Load();
+            Actors.Add(bullet);
+           
+        }
+
+        
       
-    //}
-   
-    private void h_dispatchKey()
-    {
-      if (!IsPressed(VirtualKeyStates.Space)) return;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override BaseLevel NextLevel()
+        {
+            return new StartScreen();
+        }
 
-      if(m_frameCount % 10 != 0) return;
+        public void GenBull()
+        {
+            var datetime = DateTime.Now.Millisecond;
+           
+            Ship_2[] arShip2S = Actors.Where(actor => actor is Ship_2).Cast<Ship_2>().ToArray();
+            
+            
+            var n = datetime;
+          
 
-      Bullet bullet = new Bullet(this)
-      {
-        Position = Player.Position
-      };
+            if (Convert.ToInt32(n) % 27 == 0 & Convert.ToInt32(n) > 0)
+            { 
+                foreach (Ship_2 ship2 in arShip2S)
+                {
+                    {
+                        Actors.Add(ship2.krienemybul(ship2));
+                    }
 
-     
-      bullet.Load();
-      Actors.Add(bullet);
-    }
+                }
+            }
+           
+
+        }
+
+        public void killBullet()
+        {
+            EnemyBullet[] arShip2S = Actors.Where(actor => actor is EnemyBullet).Cast<EnemyBullet>().ToArray();
+            foreach (EnemyBullet enemy in arShip2S)
+            {
+                if (enemy.Position.Y >= 410)
+                    Actors.Remove(enemy);
+                    
+            }
+        }
+
+        public override void Update()
+        {
+            m_frameCount++;
+            h_dispatchKey();
+
+
+            base.Update();
+            GenBull();
+            killBullet();
+          
+            IEnumerable<BaseActor> killedActors = CollisionChecher.GetAllCollisions(Actors);
+
+            foreach (BaseActor killedActor in killedActors)
+            {
+                if (killedActor.IsAlive)
+                        killedActor.IsAlive = false;
+                
+            }
+
+            List<BaseActor> toRemove = Actors.Where(actor => actor.CanDrop).ToList();
+            BaseActor[] actors = new BaseActor[toRemove.Count()];
+            toRemove.CopyTo(actors);
+
+            foreach (BaseActor actor in actors.Where(actor => actor.CanDrop))
+            {
+                Actors.Remove(actor);
+
+            }
+          
+
+
+            if (Player.CanDrop)
+                Failed = true;
  
-    
-    
+            //has no enemy
+            if (Actors.All(actor => actor.ActorType != ActorType.Enemy) )
+                Success = true;
+        }
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <returns></returns>
-
-
-    public override BaseLevel NextLevel()
-    {
-      return new StartScreen();
+        #endregion
     }
-
-    public override void Update()
-    {
-      m_frameCount++;
-      h_dispatchKey();
-     
-      base.Update();
-
-      IEnumerable<BaseActor> killedActors = CollisionChecher.GetAllCollisions(Actors);
-
-      foreach (BaseActor killedActor in killedActors)
-      {
-        if (killedActor.IsAlive)
-          killedActor.IsAlive = false;
-      }
-
-      List<BaseActor> toRemove = Actors.Where(actor => actor.CanDrop).ToList();
-      BaseActor[] actors = new BaseActor[toRemove.Count()];
-      toRemove.CopyTo(actors);
-
-      foreach (BaseActor actor in actors.Where(actor => actor.CanDrop))
-      {
-        Actors.Remove(actor);
-      }
-
-      if (Player.CanDrop)
-        Failed = true;
-
-      //has no enemy
-      if (Actors.All(actor => actor.ActorType != ActorType.Enemy))
-        Success = true;
-    }
-
-    #endregion
-  }
 }
-

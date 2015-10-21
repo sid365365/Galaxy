@@ -1,5 +1,6 @@
 ﻿#region using
 
+using System.Timers;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -14,11 +15,10 @@ namespace Galaxy.Environments.Actors
 {
     public class Ship_2 : DethAnimationActor
     {
-
         #region Constant
 
         private const int MaxSpeed = 3;
-        private const long StartFlyMs = 2000;
+        private const long StartFlyMs = 10;
 
         #endregion
 
@@ -28,74 +28,89 @@ namespace Galaxy.Environments.Actors
         private Stopwatch m_flyTimer;
 
         #endregion
+
         #region Constructors
 
-    public Ship_2(ILevelInfo info):base(info)
-    {
-      Width = 30;
-      Height = 30;
-      ActorType = ActorType.Enemy;
-    }
-
-    #endregion
-    public override void Update()
-    {
-        base.Update();
-
-        if (!IsAlive)
-            return;
-
-        if (!m_flying)
+        public Ship_2(ILevelInfo info) : base(info)
         {
-            if (m_flyTimer.ElapsedMilliseconds <= StartFlyMs) return;
-
-            m_flyTimer.Stop();
-            m_flyTimer = null;
-            h_changePosition();
-            m_flying = true;
-        }
-        else
-        {
-            h_changePosition();
+            Width = 30;
+            Height = 30;
+            ActorType = ActorType.Enemy;
         }
 
-        EnemyBullet enbullet = new EnemyBullet(Info);
-       
-       
+        #endregion
 
-
-    }
-    #region Overrides
-
-    public override void Load()
-    {
-        Load(@"Assets\ship_2.png");
-        if (m_flyTimer == null)
+        public override void Update()
         {
-            m_flyTimer = new Stopwatch();
-            m_flyTimer.Start();
+            base.Update();
+
+            if (!IsAlive)
+                return;
+
+            if (!m_flying)
+            {
+                if (m_flyTimer.ElapsedMilliseconds <= StartFlyMs) return;
+
+                m_flyTimer.Stop();
+                m_flyTimer = null;
+                h_changePosition();
+                m_flying = true;
+            }
+            else
+            {
+                h_changePosition();
+            }
         }
-    }
 
-    #endregion
-    #region Private methods
+        #region Overrides
 
-    public void h_changePosition()
-    {
         
-          const int Speed = 2;
-        if (IsPressed(VirtualKeyStates.Left))
-            Position = new Point(Position.X - Speed, Position.Y);
-        if (IsPressed(VirtualKeyStates.Right))
-            Position = new Point(Position.X + Speed, Position.Y);
-  //      Position = new Point((int)(Position.X), (int)(Position.Y + 1));
-        
+        public EnemyBullet krienemybul(Ship_2 ship)
+        {
+           
+           
+                EnemyBullet enbullet = new EnemyBullet(Info);
+                int positionY = ship.Position.Y + 26;
+                int positionX = ship.Position.X + 12;
+                enbullet.Position = new Point(positionX, positionY);
+                enbullet.Load();
+                return enbullet;
+           
+           
+               
+            
+        }
+
+
+
+
+      
+
+
+        public override void Load()
+        {
+            Load(@"Assets\ship_2.png");
+            if (m_flyTimer == null)
+            {
+                m_flyTimer = new Stopwatch();
+                m_flyTimer.Start();
+            }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        public void h_changePosition()
+        {
+            const int Speed = 2;
+            if (IsPressed(VirtualKeyStates.Left))
+                Position = new Point(Position.X - Speed, Position.Y);
+            if (IsPressed(VirtualKeyStates.Right))
+                Position = new Point(Position.X + Speed, Position.Y);
+            //      Position = new Point((int)(Position.X), (int)(Position.Y + 1));
+        }
+
+        #endregion
     }
-
-    #endregion
-
-
-    }
-
-
 }
