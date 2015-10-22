@@ -35,9 +35,6 @@ namespace Galaxy
 
     #endregion
 
-    private void canvas_Click(object sender, System.EventArgs e)
-    {
-
-    }
+   
   }
 }

@@ -12,77 +12,77 @@ using Size = System.Drawing.Size;
 
 namespace Galaxy.Environments.Actors
 {
-  public class Ship : DethAnimationActor
-  {
-    #region Constant
-
-    private const int MaxSpeed = 3;
-    private const long StartFlyMs = 2000;
-
-    #endregion
-
-    #region Private fields
-
-    private bool m_flying;
-    private Stopwatch m_flyTimer;
-
-    #endregion
-
-    #region Constructors
-
-    public Ship(ILevelInfo info):base(info)
+    public class Ship : DethAnimationActor
     {
-      Width = 30;
-      Height = 30;
-      ActorType = ActorType.Enemy;
-    }
+        #region Constant
 
-    #endregion
+        private const int MaxSpeed = 3;
+        private const long StartFlyMs = 2000;
 
-    #region Overrides
+        #endregion
 
-    public override void Update()
-    {
-      base.Update();
+        #region Private fields
 
-      if (!IsAlive)
-        return;
+        private bool m_flying;
+        private Stopwatch m_flyTimer;
 
-      if (!m_flying)
-      {
-        if (m_flyTimer.ElapsedMilliseconds <= StartFlyMs) return;
+        #endregion
 
-        m_flyTimer.Stop();
-        m_flyTimer = null;
-        h_changePosition();
-        m_flying = true;
-      }
-      else
-      {
-        h_changePosition();
-      }
-    }
+        #region Constructors
 
-    #endregion
+        public Ship(ILevelInfo info) : base(info)
+        {
+            Width = 30;
+            Height = 30;
+            ActorType = ActorType.Enemy;
+        }
 
-    #region Overrides
+        #endregion
 
-    public override void Load()
-    {
-      Load(@"Assets\ship.png");
-      if (m_flyTimer == null)
-      {
-        m_flyTimer = new Stopwatch();
-        m_flyTimer.Start();
-      }
-    }
+        #region Overrides
 
-    #endregion
+        public override void Update()
+        {
+            base.Update();
 
-    #region Private methods
+            if (!IsAlive)
+                return;
 
-    private void h_changePosition()
-    {
+            if (!m_flying)
+            {
+                if (m_flyTimer.ElapsedMilliseconds <= StartFlyMs) return;
+
+                m_flyTimer.Stop();
+                m_flyTimer = null;
+                h_changePosition();
+                m_flying = true;
+            }
+            else
+            {
+                h_changePosition();
+            }
+        }
+
+        #endregion
+
+        #region Overrides
+
+        public override void Load()
+        {
+            Load(@"Assets\ship.png");
+            if (m_flyTimer == null)
+            {
+                m_flyTimer = new Stopwatch();
+                m_flyTimer.Start();
+            }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private void h_changePosition()
+        {
             /*Point playerPosition = Info.GetPlayerPosition();
 
             Vector distance = new Vector(playerPosition.X - Position.X, playerPosition.Y - Position.Y);
@@ -106,9 +106,9 @@ namespace Galaxy.Environments.Actors
 
             Position = new Point((int) (Position.X + movement.X), (int) (Position.Y + movement.Y));
             */
-            Position = new Point((int)(Position.X), (int)(Position.Y + 1));
+            Position = new Point((int) (Position.X), (int) (Position.Y + 1));
         }
 
-    #endregion
-  }
+        #endregion
+    }
 }

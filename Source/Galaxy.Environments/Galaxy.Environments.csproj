@@ -48,7 +48,7 @@
     <Compile Include="Actors\Player.cs" />
     <Compile Include="Actors\Ship.cs" />
     <Compile Include="Actors\Bullet.cs" />
-    <Compile Include="Actors\Ship_2.cs" />
+    <Compile Include="Actors\Ship2.cs" />
     <Compile Include="Actors\StarOfDeathShip.cs" />
     <Compile Include="LevelOne.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +63,9 @@
     <Content Include="Assets\bullet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\bullet_2.png" />
+    <Content Include="Assets\bullet_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\LevelOne.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -73,8 +75,12 @@
     <Content Include="Assets\ship.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\ship_2.png" />
-    <Content Include="Assets\starOfDeathShip.png" />
+    <Content Include="Assets\ship_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\starOfDeathShip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

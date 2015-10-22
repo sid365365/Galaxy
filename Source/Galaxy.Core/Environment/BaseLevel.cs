@@ -8,140 +8,135 @@ using Galaxy.Core.Actors;
 
 namespace Galaxy.Core.Environment
 {
-  public abstract class BaseLevel : ILevelInfo
-  {
-    #region Constant
-
-    public const int DefaultHeight = 480;
-    public const int DefaultWidth = 640;
-
-    #endregion
-
-    #region Private fields
-
-    private Image m_image;
-    public Size Size { get; set; }
-
-    #endregion
-
-    #region public properties
-
-    public bool Success { get; set; }
-    public bool Failed { get; set; }
-
-    #endregion
-
-    #region Protected properties
-
-    protected List<BaseActor> Actors { get; set; }
-    protected string FileName { get; set; }
-
-    #endregion
-
-    #region Constructors
-
-    protected BaseLevel()
+    public abstract class BaseLevel : ILevelInfo
     {
-      Actors = new List<BaseActor>();
+        #region Constant
 
-      Size = new Size(DefaultWidth, DefaultHeight);
-    }
+        public const int DefaultHeight = 480;
+        public const int DefaultWidth = 640;
 
-    #endregion
+        #endregion
 
-    #region Public methods
+        #region Private fields
 
-    public void Draw(Graphics graphics)
-    {
-      h_draw(graphics);
+        private Image m_image;
+        public Size Size { get; set; }
 
-      foreach (BaseActor actor in Actors)
-      {
-        actor.Draw(graphics);
-      }
-    }
+        #endregion
 
-    public void Load()
-    {
-      h_load();
+        #region public properties
 
-      foreach (BaseActor actor in Actors)
-      {
-        actor.Load();
-      }
-    }
+        public bool Success { get; set; }
+        public bool Failed { get; set; }
 
-    public abstract BaseLevel NextLevel();
+        #endregion
 
-    //public virtual void Update()
-    //{
-    //  foreach (BaseActor baseActor in Actors)
-    //  {
-    //    baseActor.Update();
-    //  }
-    //}
+        #region Protected properties
 
-    protected bool IsPressed(VirtualKeyStates key)
-    {
-      return KeyState.IsPressed(key);
-    }
+        protected List<BaseActor> Actors { get; set; }
+        protected string FileName { get; set; }
 
-    #endregion
+        #endregion
 
-    #region Private methods
+        #region Constructors
 
-
-    private void h_draw(Graphics graphics)
-    {
-      graphics.DrawImage(m_image, 0, 0);
-    }
-      
-    private void h_load()
-    {
-      m_image = (Bitmap)Image.FromFile(FileName);
-      m_image = new Bitmap(m_image, Size);
-    }
-
-    #endregion
-
-    #region Implementation of ILevelInfo
-
-    public Point GetPlayerPosition()
-    {
-      return Player.Position;
-    }
-
-    public Size GetLevelSize()
-    {
-      return Size;
-    }
-  /// <summary>
-  /// /
-  /// </summary>
-  /// <param name="pEnemyBullet"></param>
-
-    public void AddBullet(BaseActor pEnemyBullet)
-  {
-      
-        Actors.Add(pEnemyBullet);
-
-    }
-    public virtual void Update()
-    {
-
-        BaseActor[] actors = new BaseActor[Actors.Count];
-        Actors.CopyTo(actors);
-        foreach (BaseActor baseActor in actors)
+        protected BaseLevel()
         {
-            baseActor.Update();
+            Actors = new List<BaseActor>();
+
+            Size = new Size(DefaultWidth, DefaultHeight);
         }
+
+        #endregion
+
+        #region Public methods
+
+        public void Draw(Graphics graphics)
+        {
+            h_draw(graphics);
+
+            foreach (BaseActor actor in Actors)
+            {
+                actor.Draw(graphics);
+            }
+        }
+
+        public void Load()
+        {
+            h_load();
+
+            foreach (BaseActor actor in Actors)
+            {
+                actor.Load();
+            }
+        }
+
+        public abstract BaseLevel NextLevel();
+
+        //public virtual void Update()
+        //{
+        //  foreach (BaseActor baseActor in Actors)
+        //  {
+        //    baseActor.Update();
+        //  }
+        //}
+
+        protected bool IsPressed(VirtualKeyStates key)
+        {
+            return KeyState.IsPressed(key);
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private void h_draw(Graphics graphics)
+        {
+            graphics.DrawImage(m_image, 0, 0);
+        }
+
+        private void h_load()
+        {
+            m_image = (Bitmap) Image.FromFile(FileName);
+            m_image = new Bitmap(m_image, Size);
+        }
+
+        #endregion
+
+        #region Implementation of ILevelInfo
+
+        public Point GetPlayerPosition()
+        {
+            return Player.Position;
+        }
+
+        public Size GetLevelSize()
+        {
+            return Size;
+        }
+
+        /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="pEnemyBullet"></param>
+        public void AddBullet(BaseActor pEnemyBullet)
+        {
+            Actors.Add(pEnemyBullet);
+        }
+
+        public virtual void Update()
+        {
+            BaseActor[] actors = new BaseActor[Actors.Count];
+            Actors.CopyTo(actors);
+            foreach (BaseActor baseActor in actors)
+            {
+                baseActor.Update();
+            }
+        }
+
+
+        protected BaseActor Player { get; set; }
+
+        #endregion
     }
-
-    
-
-
-      protected BaseActor Player { get; set; }
-
-    #endregion
-  }
 }

@@ -8,7 +8,7 @@ using Size = System.Drawing.Size;
 
 namespace Galaxy.Environments.Actors
 {
-    class StarOfDeathShip : DethAnimationActor
+    internal class StarOfDeathShip : DethAnimationActor
     {
         #region Constant
 
@@ -27,7 +27,7 @@ namespace Galaxy.Environments.Actors
 
         #region Constructors
 
-        public StarOfDeathShip(ILevelInfo info):base(info)
+        public StarOfDeathShip(ILevelInfo info) : base(info)
         {
             Width = 30;
             Height = 30;
@@ -79,10 +79,10 @@ namespace Galaxy.Environments.Actors
         #region Private methods
 
         private void h_changePosition()
-        {            
+        {
             Size levelSize = Info.GetLevelSize();
 
-            int yNewPosition = (int)(Position.Y + Math.Round(Math.Sin(Position.X / 30)));
+            int yNewPosition = (int) (Position.Y + Math.Round(Math.Sin(Position.X/30)));
 
             if (Position.X > (levelSize.Width - 100))
                 direction = false;
@@ -94,25 +94,24 @@ namespace Galaxy.Environments.Actors
             {
                 if (Position.X < 150 || Position.X > levelSize.Width - 200)
                 {
-                    Position = new Point((int)(Position.X + MaxSpeed), yNewPosition + 1);
+                    Position = new Point((int) (Position.X + MaxSpeed), yNewPosition + 1);
                 }
                 else
                 {
-                    Position = new Point((int)(Position.X + MaxSpeed), yNewPosition);
-                } 
+                    Position = new Point((int) (Position.X + MaxSpeed), yNewPosition);
+                }
             }
             else
             {
                 if (Position.X < 150 || Position.X > levelSize.Width - 200)
                 {
-                    Position = new Point((int)(Position.X - MaxSpeed-1), yNewPosition + 1);
+                    Position = new Point((int) (Position.X - MaxSpeed - 1), yNewPosition + 1);
                 }
                 else
                 {
-                    Position = new Point((int)(Position.X - MaxSpeed), yNewPosition);
+                    Position = new Point((int) (Position.X - MaxSpeed), yNewPosition);
                 }
             }
-            
         }
 
         #endregion

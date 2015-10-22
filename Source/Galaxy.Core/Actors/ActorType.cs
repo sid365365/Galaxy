@@ -1,10 +1,8 @@
 ﻿namespace Galaxy.Core.Actors
 {
-  public enum ActorType
-  {
-    Player,
-    Enemy,
-      Bullet,
-     
-  }
+    public enum ActorType
+    {
+        Player,
+        Enemy,
+    }
 }

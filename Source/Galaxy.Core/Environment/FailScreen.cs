@@ -4,31 +4,32 @@
 
 namespace Galaxy.Core.Environment
 {
-  public class FailScreen : BaseLevel
-  {
-    public FailScreen()
+    public class FailScreen : BaseLevel
     {
-      FileName = @"Assets\FailScreen.png";
+        public FailScreen()
+        {
+            FileName = @"Assets\FailScreen.png";
+        }
+
+        #region Overrides
+
+        #region Overrides of BaseLevel
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (IsPressed(VirtualKeyStates.Return))
+                Success = true;
+        }
+
+        #endregion
+
+        public override BaseLevel NextLevel()
+        {
+            return new StartScreen();
+        }
+
+        #endregion
     }
-    #region Overrides
-
-    #region Overrides of BaseLevel
-
-    public override void Update()
-    {
-      base.Update();
-
-      if (IsPressed(VirtualKeyStates.Return))
-        Success = true;
-    }
-
-    #endregion
-
-    public override BaseLevel NextLevel()
-    {
-      return new StartScreen();
-    }
-
-    #endregion
-  }
 }

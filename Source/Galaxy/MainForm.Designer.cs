@@ -77,6 +77,11 @@ namespace Galaxy
             this.ResumeLayout(false);
 
         }
+
+        private void canvas_Click(object sender, System.EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
         #endregion
     }
 }

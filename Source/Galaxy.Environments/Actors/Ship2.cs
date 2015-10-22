@@ -13,7 +13,7 @@ using Size = System.Drawing.Size;
 
 namespace Galaxy.Environments.Actors
 {
-    public class Ship_2 : DethAnimationActor
+    public class Ship2 : DethAnimationActor
     {
         #region Constant
 
@@ -31,7 +31,7 @@ namespace Galaxy.Environments.Actors
 
         #region Constructors
 
-        public Ship_2(ILevelInfo info) : base(info)
+        public Ship2(ILevelInfo info) : base(info)
         {
             Width = 30;
             Height = 30;
@@ -64,28 +64,15 @@ namespace Galaxy.Environments.Actors
 
         #region Overrides
 
-        
-        public EnemyBullet krienemybul(Ship_2 ship)
+        public EnemyBullet CreateEnemyBullet(Ship2 ship)
         {
-           
-           
-                EnemyBullet enbullet = new EnemyBullet(Info);
-                int positionY = ship.Position.Y + 26;
-                int positionX = ship.Position.X + 12;
-                enbullet.Position = new Point(positionX, positionY);
-                enbullet.Load();
-                return enbullet;
-           
-           
-               
-            
+            var enbullet = new EnemyBullet(Info);
+            int positionY = ship.Position.Y + 26;
+            int positionX = ship.Position.X + 12;
+            enbullet.Position = new Point(positionX, positionY);
+            enbullet.Load();
+            return enbullet;
         }
-
-
-
-
-      
-
 
         public override void Load()
         {
@@ -108,7 +95,6 @@ namespace Galaxy.Environments.Actors
                 Position = new Point(Position.X - Speed, Position.Y);
             if (IsPressed(VirtualKeyStates.Right))
                 Position = new Point(Position.X + Speed, Position.Y);
-            //      Position = new Point((int)(Position.X), (int)(Position.Y + 1));
         }
 
         #endregion

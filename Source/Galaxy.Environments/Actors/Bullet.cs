@@ -8,37 +8,37 @@ using Galaxy.Core.Environment;
 
 namespace Galaxy.Environments.Actors
 {
-  public class Bullet : BaseActor
-  {
-    #region Constant
-
-    private const int Speed = 10;
-
-    #endregion
-
-    #region Constructors
-
-    public Bullet(ILevelInfo info):base(info)
+    public class Bullet : BaseActor
     {
-      Width = 5;
-      Height = 10;
-      ActorType = ActorType.Player;
+        #region Constant
+
+        private const int Speed = 10;
+
+        #endregion
+
+        #region Constructors
+
+        public Bullet(ILevelInfo info) : base(info)
+        {
+            Width = 5;
+            Height = 10;
+            ActorType = ActorType.Player;
+        }
+
+        #endregion
+
+        #region Overrides
+
+        public override void Load()
+        {
+            Load(@"Assets\bullet.png");
+        }
+
+        public override void Update()
+        {
+            Position = new Point(Position.X, Position.Y - Speed);
+        }
+
+        #endregion
     }
-
-    #endregion
-
-    #region Overrides
-
-    public override void Load()
-    {
-      Load(@"Assets\bullet.png");
-    }
-
-    public override void Update()
-    {
-      Position = new Point(Position.X, Position.Y - Speed);
-    }
-
-    #endregion
-  }
 }
