@@ -16,7 +16,7 @@ namespace Galaxy.Environments.Actors
     {
         #region Constant
 
-        private const int MaxSpeed = 3;
+        private const int MaxSpeed = 2;
         private const long StartFlyMs = 2000;
 
         #endregion
@@ -80,6 +80,20 @@ namespace Galaxy.Environments.Actors
         #endregion
 
         #region Private methods
+
+        public void h_changePosition1()
+        {
+            Position = new Point((int)(Position.X + 2), (int)(Position.Y));
+        }
+        public void h_changePosition2()
+        {
+            Position = new Point((int)(Position.X - 2), (int)(Position.Y));
+        }
+        public void h_changePosition3()
+        {
+
+            Position = new Point((int)(Position.X - 1), (int)(Position.Y+5));
+        }
 
         private void h_changePosition()
         {

@@ -90,6 +90,43 @@ namespace Galaxy.Environments
             return new StartScreen();
         }
 
+        public void ChangePositionShip()
+        {
+            var datetime1 = DateTime.Now.Second;
+            var n = datetime1;
+            Ship[] arShipS = Actors.Where(actor => actor is Ship).Cast<Ship>().ToArray();
+            if (Convert.ToInt32(n)%2 == 0)
+            {
+                foreach (Ship ship2 in arShipS)
+                {
+                    ship2.h_changePosition1();
+                }
+                foreach (Ship ship2 in arShipS)
+                {
+                    ship2.h_changePosition1();
+                }
+            }
+            else
+            {
+                foreach (Ship ship2 in arShipS)
+                {
+                    ship2.h_changePosition2();
+                }
+            }
+            if (arShipS.Length > 1)
+            {
+                var shipFirst = arShipS.First();
+                shipFirst.h_changePosition3();
+                var shipLast = arShipS.Last();
+                shipLast.h_changePosition3();
+            }
+            if (arShipS.Length == 1)
+            {
+                var shipFirst = arShipS.First();
+                shipFirst.h_changePosition3();
+            }
+        }
+
         public void GenerateBullet()
         {
             var datetime = DateTime.Now.Millisecond;
@@ -111,7 +148,7 @@ namespace Galaxy.Environments
             EnemyBullet[] arShip2S = Actors.Where(actor => actor is EnemyBullet).Cast<EnemyBullet>().ToArray();
             foreach (EnemyBullet enemy in arShip2S)
             {
-                if (enemy.Position.Y >= 410)
+                if (enemy.Position.Y >= DefaultHeight)
                     Actors.Remove(enemy);
             }
         }
@@ -124,7 +161,7 @@ namespace Galaxy.Environments
             base.Update();
             GenerateBullet();
             DestroyBullet();
-
+            ChangePositionShip();
             IEnumerable<BaseActor> killedActors = CollisionChecher.GetAllCollisions(Actors);
 
             foreach (BaseActor killedActor in killedActors)
