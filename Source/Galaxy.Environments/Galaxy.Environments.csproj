@@ -50,6 +50,7 @@
     <Compile Include="Actors\Bullet.cs" />
     <Compile Include="Actors\Ship2.cs" />
     <Compile Include="Actors\StarOfDeathShip.cs" />
+    <Compile Include="Actors\Thunderbolt.cs" />
     <Compile Include="LevelOne.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,7 +1,4 @@
-﻿#region using
-
-using System.Timers;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
 using Galaxy.Core.Actors;
@@ -9,13 +6,11 @@ using Galaxy.Core.Environment;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
-#endregion
-
 namespace Galaxy.Environments.Actors
 {
-    public class Ship2 : DethAnimationActor
+   public  class Thunderbolt: DethAnimationActor
     {
-        #region Constant
+         #region Constant
 
         private const int MaxSpeed = 3;
         private const long StartFlyMs = 10;
@@ -31,11 +26,11 @@ namespace Galaxy.Environments.Actors
 
         #region Constructors
 
-        public Ship2(ILevelInfo info) : base(info)
+        public Thunderbolt(ILevelInfo info) : base(info)
         {
             Width = 30;
             Height = 30;
-            ActorType = ActorType.Enemy;
+            ActorType = ActorType.Thunderbolt;
         }
 
         #endregion
@@ -62,21 +57,9 @@ namespace Galaxy.Environments.Actors
             }
         }
 
-        #region Overrides
-
-        public EnemyBullet CreateEnemyBullet(Ship2 ship)
-        {
-            var enbullet = new EnemyBullet(Info);
-            int positionY = ship.Position.Y + 26;
-            int positionX = ship.Position.X + 12;
-            enbullet.Position = new Point(positionX, positionY);
-            enbullet.Load();
-            return enbullet;
-        }
-
         public override void Load()
         {
-            Load(@"Assets\ship_2.png");
+            Load(@"Assets\Thunderbolt.gif");
             if (m_flyTimer == null)
             {
                 m_flyTimer = new Stopwatch();
@@ -84,20 +67,29 @@ namespace Galaxy.Environments.Actors
             }
         }
 
-        #endregion
-
         #region Private methods
 
        
        public void h_changePosition()
-        {
-            const int Speed = 2;
-            if (IsPressed(VirtualKeyStates.Left))
-                Position = new Point(Position.X - Speed, Position.Y);
-            if (IsPressed(VirtualKeyStates.Right))
-                Position = new Point(Position.X + Speed, Position.Y);
+       {
+           var datetime = DateTime.Now.Second;
+           var datetime2 = DateTime.Now.Second;
+           if (datetime > 20 )
+               datetime = datetime*(-1);
+           if (datetime < 29)
+               datetime = datetime * (1);
+          
+           if (datetime2 % 2 == 0)
+               datetime2 = datetime2 * (-1);
+           if (datetime % 10 == 0)
+               datetime2 = datetime2 * (1);
+
+
+               Position = new Point(Position.X - datetime/10, Position.Y + datetime2/10);
+                
         }
 
         #endregion
     }
-}
+    }
+

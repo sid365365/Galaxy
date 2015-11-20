@@ -42,11 +42,19 @@ namespace Galaxy.Environments
                 Actors.Add(ship);
             }
 
+            for (int i = 0; i < 1; i++)
+            {
+                var Thunderbolt = new Thunderbolt(this);
+                int positionY = Thunderbolt.Height + 200;
+                int positionX = 170 + i * (Thunderbolt.Width + 100);
+                Thunderbolt.Position = new Point(positionX, positionY);
+                Actors.Add(Thunderbolt);
+            }
             for (int i = 0; i < 4; i++)
             {
                 var ship2 = new Ship2(this);
                 int positionY = ship2.Height + 50;
-                int positionX = 170 + i*(ship2.Width + 100);
+                int positionX = 170 + i * (ship2.Width + 100);
                 ship2.Position = new Point(positionX, positionY);
                 Actors.Add(ship2);
             }
@@ -90,42 +98,26 @@ namespace Galaxy.Environments
             return new StartScreen();
         }
 
+
         public void ChangePositionShip()
         {
-            var datetime1 = DateTime.Now.Second;
-            var n = datetime1;
             Ship[] arShipS = Actors.Where(actor => actor is Ship).Cast<Ship>().ToArray();
-            if (Convert.ToInt32(n)%2 == 0)
-            {
-                foreach (Ship ship2 in arShipS)
-                {
-                    ship2.h_changePosition1();
-                }
-                foreach (Ship ship2 in arShipS)
-                {
-                    ship2.h_changePosition1();
-                }
-            }
-            else
-            {
-                foreach (Ship ship2 in arShipS)
-                {
-                    ship2.h_changePosition2();
-                }
-            }
+
             if (arShipS.Length > 1)
             {
                 var shipFirst = arShipS.First();
-                shipFirst.h_changePosition3();
+                shipFirst.IsLeftOrRide = true;
                 var shipLast = arShipS.Last();
-                shipLast.h_changePosition3();
+                shipLast.IsLeftOrRide = true;
             }
             if (arShipS.Length == 1)
             {
                 var shipFirst = arShipS.First();
-                shipFirst.h_changePosition3();
+                shipFirst.IsLeftOrRide = true;
             }
         }
+
+      
 
         public void GenerateBullet()
         {
@@ -162,12 +154,17 @@ namespace Galaxy.Environments
             GenerateBullet();
             DestroyBullet();
             ChangePositionShip();
+
             IEnumerable<BaseActor> killedActors = CollisionChecher.GetAllCollisions(Actors);
 
             foreach (BaseActor killedActor in killedActors)
             {
-                if (killedActor.IsAlive)
+                
+                {
+                    if (killedActor.IsAlive & killedActor.ActorType != ActorType.Thunderbolt)
                     killedActor.IsAlive = false;
+                }
+                
             }
 
             List<BaseActor> toRemove = Actors.Where(actor => actor.CanDrop).ToList();

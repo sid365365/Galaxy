@@ -17,7 +17,7 @@ namespace Galaxy.Environments.Actors
         #region Constant
 
         private const int MaxSpeed = 2;
-        private const long StartFlyMs = 2000;
+        private const long StartFlyMs = 0;
 
         #endregion
 
@@ -81,18 +81,16 @@ namespace Galaxy.Environments.Actors
 
         #region Private methods
 
-        public void h_changePosition1()
-        {
-            Position = new Point((int)(Position.X + 2), (int)(Position.Y));
-        }
-        public void h_changePosition2()
-        {
-            Position = new Point((int)(Position.X - 2), (int)(Position.Y));
-        }
-        public void h_changePosition3()
-        {
+        private bool m_isleftorride;
 
-            Position = new Point((int)(Position.X - 1), (int)(Position.Y+5));
+        public bool IsLeftOrRide
+        {
+            get { return m_isleftorride; }
+            set
+            {
+                m_isleftorride = value;
+                if (m_isleftorride) return;
+            }
         }
 
         private void h_changePosition()
@@ -120,7 +118,11 @@ namespace Galaxy.Environments.Actors
 
             Position = new Point((int) (Position.X + movement.X), (int) (Position.Y + movement.Y));
             */
-            Position = new Point((int) (Position.X), (int) (Position.Y + 1));
+            var datetime1 = DateTime.Now.Second;
+            var n = datetime1;
+            int XX = Convert.ToInt32(n)%2 == 0 ? 2 : -2;
+            int YY = m_isleftorride == false ? 1 : 4;
+            Position = new Point((int) (Position.X + XX), (int) (Position.Y + YY));
         }
 
         #endregion

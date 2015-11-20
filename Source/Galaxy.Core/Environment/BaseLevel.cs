@@ -73,14 +73,6 @@ namespace Galaxy.Core.Environment
 
         public abstract BaseLevel NextLevel();
 
-        //public virtual void Update()
-        //{
-        //  foreach (BaseActor baseActor in Actors)
-        //  {
-        //    baseActor.Update();
-        //  }
-        //}
-
         protected bool IsPressed(VirtualKeyStates key)
         {
             return KeyState.IsPressed(key);
@@ -133,7 +125,6 @@ namespace Galaxy.Core.Environment
                 baseActor.Update();
             }
         }
-
 
         protected BaseActor Player { get; set; }
 
